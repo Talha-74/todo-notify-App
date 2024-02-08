@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\TaskAssigned;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
@@ -53,6 +55,10 @@ class TaskController extends Controller
             $task->assigned_to = $request->assigned_to;
             $task->status = $request->status;
             $task->update();
+
+            $user = User::find($request->assigned_to)->name;
+
+            broadcast(new TaskAssigned($task, $user));
 
             DB::commit();
         } catch (\Throwable $th) {

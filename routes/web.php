@@ -3,6 +3,7 @@
 use App\Http\Controllers\TaskController;
 use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +28,12 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 // Task CRUD
 Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
 Route::post('/task/store', [TaskController::class, 'store'])->name('tasks.store');
+
+Broadcast::channel('tasks', function ($user) {
+    return true; // You can implement more advanced authorization logic here if needed
+});
+
+
 Route::middleware(['auth', 'task.update'])->group(function() {
 Route::post('/task/update', [TaskController::class, 'update'])->name('tasks.update');
 Route::delete('/task/delete/{id}', [TaskController::class, 'destroy'])->name('tasks.delete');
