@@ -47,9 +47,9 @@
                             <th scope="col">Description</th>
                             <th scope="col">Assigned_to</th>
                             <th scope="col">Status</th>
-                            @role('admin')
+                            {{-- @role('admin') --}}
                             <th scope="col">Action</th>
-                            @endrole
+                            {{-- @endrole --}}
                         </tr>
                     </thead>
                     <tbody>
@@ -73,22 +73,30 @@
                                 </span>
                                 @endif
                             </td>
-                            @role('admin')
+                            {{-- @role('admin') --}}
                             <td>
-                                <span>
-                                    <a class="btn btn-icon btn-sm btn-warning update_task" data-toggle="modal"
-                                        data-target="#editTask" title="Edit" data-id="{{ $task->id }}"
-                                        data-title="{{ $task->title }}" data-description="{{ $task->description }}"
-                                        data-status="{{ $task->status }}" data-assigned_to="{{ $task->assigned_to }}">
-                                        <i class="bi bi-pencil-fill"></i>
-                                    </a>
+                                <div class="d-flex">
+                                    <span style="margin-right: 5px;">
+                                        <a class="btn btn-icon btn-sm btn-warning update_task" data-toggle="modal" data-target="#editTask"
+                                            title="Edit" data-id="{{ $task->id }}" data-title="{{ $task->title }}"
+                                            data-description="{{ $task->description }}" data-status="{{ $task->status }}"
+                                            data-assigned_to="{{ $task->assigned_to }}">
+                                            <i class="bi bi-pencil-fill"></i>
+                                        </a>
+                                    </span>
 
-                                    <a class="btn btn-icon btn-sm btn-danger" title="Delete" style="color: black">
-                                        <i class="bi bi-trash"></i>
-                                    </a>
-                                </span>
+                                    <form action="{{ route('tasks.delete', ['id' => $task->id]) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-icon btn-sm btn-danger" title="Delete"
+                                            style="color: black; margin-left: 5px;"
+                                            onclick="return confirm('Are you sure you want to delete this task?')">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
-                            @endrole
+                            {{-- @endrole --}}
                         </tr>
                         @endforeach
                     </tbody>
