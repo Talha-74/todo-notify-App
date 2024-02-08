@@ -27,6 +27,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 // Task CRUD
 Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
 Route::post('/task/store', [TaskController::class, 'store'])->name('tasks.store');
+Route::middleware(['auth', 'task.update'])->group(function() {
 Route::post('/task/update', [TaskController::class, 'update'])->name('tasks.update');
 Route::delete('/task/delete/{id}', [TaskController::class, 'destroy'])->name('tasks.delete');
+});
+
 
