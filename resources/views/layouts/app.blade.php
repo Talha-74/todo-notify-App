@@ -114,6 +114,7 @@
     <!-- Scripts -->
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/notifications.js') }}"></script>
     {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
 </body>
 
